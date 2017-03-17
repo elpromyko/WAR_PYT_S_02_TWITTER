@@ -35,6 +35,13 @@ class User(object):
             cnx.commit()
             self.__id = cursor.lastrowid
             return True
+        else:
+            sql_query = """
+            UPDATE Users SET name='{}', hashed_password='{}', email='{}' WHERE id='{}'
+            """.format(self.username, self.__hashed_password, self.email, self.__id)
+            cursor.execute(sql_query)
+            cnx.commit()
+            return True
     
     @staticmethod 
     def load_user_by_id(cursor, id):
