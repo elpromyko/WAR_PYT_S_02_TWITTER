@@ -4,13 +4,13 @@ from models.clcrypto import *
 class User(object):
     
     __id = None
-    name = None
+    username = None
     __hashed_password = None
     email = None
     
     def __init__(self):
         self.__id = -1
-        self.name = ""
+        self.username = ""
         self.__hashed_password = ""
         self.email = ""
         
@@ -29,7 +29,7 @@ class User(object):
         if self.__id == -1:
             sql_query = """
             INSERT INTO Users(name, hashed_password, email) VALUES('{}', '{}', '{}')
-            """.format(self.name, self.__hashed_password, self.email)
+            """.format(self.username, self.__hashed_password, self.email)
         
             cursor.execute(sql_query)
             cnx.commit()
@@ -48,7 +48,7 @@ class User(object):
         if data is not None:
             loaded_user = User()
             loaded_user.__id = id
-            loaded_user.name = data[0]
+            loaded_user.username = data[0]
             loaded_user.__hashed_password = data[1]
             loaded_user.email = data[2]
             return loaded_user
@@ -76,5 +76,5 @@ class User(object):
         
         
     def printInfo(self):
-        print("Id: {} Name: {} Email: {}".format(self.__id, self.name, self.email))
+        print("Id: {} Name: {} Email: {}".format(self.__id, self.username, self.email))
     
