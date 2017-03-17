@@ -63,3 +63,11 @@ class Tweet(object):
             tweet.creation_date = row[2]
             all_tweets.append(tweet)
         return all_tweets
+
+    def save_to_db(self, cursor, cnx):
+        sql_query = """
+        INSERT INTO Tweets(user_id, text, creation_date) VALUES('{}', '{}', '{}')
+        """.format(self.user_id, self.text, self.creation_date)
+
+        cursor.execute(sql_query)
+        cnx.commit()
