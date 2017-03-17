@@ -28,6 +28,7 @@ class Tweet(object):
             return loaded_tweet
         else:
             return None
+
     @staticmethod
     def load_all_tweets_by_user_id(cursor, user_id):
         sql_query = """
@@ -44,3 +45,21 @@ class Tweet(object):
             tweet.creation_date = row[1]
             tweets_list.append(tweet)
         return tweets_list
+
+    @staticmethod
+    def load_all_tweets(cursor):
+        sql_query = """
+        SELECT user_id, text, creation_date FROM Tweets
+        """
+        cursor.execute(sql_query)
+        data = cursor.fetchall()
+
+        all_tweets = []
+
+        for row in data:
+            tweet = Tweet()
+            tweet.user_id = row[0]
+            tweet.text = row[1]
+            tweet.creation_date = row[2]
+            all_tweets.append(tweet)
+        return all_tweets
