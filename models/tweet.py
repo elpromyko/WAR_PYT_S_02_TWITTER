@@ -28,4 +28,19 @@ class Tweet(object):
             return loaded_tweet
         else:
             return None
+    @staticmethod
+    def load_all_tweets_by_user_id(cursor, user_id):
+        sql_query = """
+        SELECT text, creation_date FROM Tweets WHERE user_id={}
+        """.format(user_id)
+        cursor.execute(sql_query)
+        data = cursor.fetchall()  #tworzy obiekt data ktory jest lista krotek
 
+        tweets_list = []
+
+        for row in data:
+            tweet = Tweet()                     #tworzy liste obiektow klasy Tweet
+            tweet.text = row[0]
+            tweet.creation_date = row[1]
+            tweets_list.append(tweet)
+        return tweets_list
