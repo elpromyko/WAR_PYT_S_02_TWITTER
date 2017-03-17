@@ -84,4 +84,15 @@ class User(object):
         
     def printInfo(self):
         print("Id: {} Name: {} Email: {}".format(self.__id, self.username, self.email))
+
+    def delete(self, cursor, cnx):
+        sql_query = "DELETE FROM Users WHERE id='{}'".format(self.__id)
+
+        cursor.execute(sql_query)
+        cnx.commit()
+        self.__id = -1
+        return True
+
+
+
     
